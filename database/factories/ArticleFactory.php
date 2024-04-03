@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Dotenv\Util\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Stringable;
 
 class ArticleFactory extends Factory
 {
@@ -15,7 +15,7 @@ class ArticleFactory extends Factory
     public function definition()
     {
         $title = $this->faker->sentence(6, true);
-        $slug = preg_replace('/\s*/', '-', $title);
+        $slug = (new Stringable(preg_replace('/\s+/', '-', $title)))->lower()->substr(0, -1);
 
         return [
             'title' => $title,
